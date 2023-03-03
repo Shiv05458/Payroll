@@ -7,29 +7,31 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/payroll")
+@RequestMapping("/api/payroll")
 public class PayrollController {
 
     @Autowired
     private PayrollService service;
 
 
-    @PostMapping("/create")
+    @PostMapping("/v1/create")
     public ResponseEntity<String> createPayroll(@RequestBody Payroll payroll){
         String str = service.createPayroll(payroll);
         return new ResponseEntity<>(str, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Payroll> updatePayroll(@PathVariable int id, @RequestBody Payroll payroll){
-        Payroll pay = service.updatePayroll(id, payroll);
+    @PutMapping("/v1/update/{pId}")
+    public ResponseEntity<Payroll> updatePayroll(@PathVariable int pId, @RequestBody Payroll payroll){
+        Payroll pay = service.updatePayroll(pId, payroll);
         return new ResponseEntity<>(pay, HttpStatus.OK);
     }
 
-    @GetMapping("/getPayroll/details/{id}")
-    public ResponseEntity<Payroll> getPayrollDetails(@PathVariable int id){
-        Payroll pay = service.getPayroll(id);
+    @GetMapping("/v1/details/{empId}")
+    public ResponseEntity<Payroll> getPayrollDetails(@PathVariable int empId){
+        Payroll pay = service.getPayroll(empId);
         return new ResponseEntity<>(pay, HttpStatus.OK);
     }
+
 }
